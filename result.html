@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最终结果</title>
+    <style>
+        .text-box {
+            border: 2px solid lightblue;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: black;
+        }
+        .image-box {
+            border: 2px solid green;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>最终结果</h1>
+    <form action="/result" method="post" enctype="multipart/form-data">
+        {% for i, block in enumerate(blocks) %}
+            <div class="text-box">{{ block.content }}</div>
+            <div class="image-box">
+                {% if block.type == 'image' and block.content %}
+                    <img src="{{ block.content }}" alt="图片">
+                {% else %}
+                    <input type="file" name="image_{{ i }}">
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit">上传图片并完成</button>
+    </form>
+</body>
+</html>

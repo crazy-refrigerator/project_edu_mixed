@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extracted Results</title>
+</head>
+<body>
+    <h1>Extracted Image(s)</h1>
+    <ul>
+        {% for result in results %}
+        <li>
+            <h2>Figure Number: {{ result.figure_number }}</h2>
+            <img src="/static/{{ result.image_path }}" alt="Image {{ result.figure_number }}" style="max-width: 100%;">
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

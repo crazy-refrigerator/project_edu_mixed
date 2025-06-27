@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        #editor {
+            width: 50%;
+            margin: 0 auto;
+        }
+        .text-box {
+            border: 2px solid lightblue;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+            word-wrap: break-word;
+        }
+        .image-box {
+            border: 2px dashed green;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f6fff6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .image-box input[type="file"] {
+            display: none;
+        }
+        .add-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 30px;
+            margin: 10px 0;
+            color: green;
+            font-size: 20px;
+            border: 1px dashed green;
+            border-radius: 5px;
+            background-color: #e8ffe8;
+            cursor: pointer;
+        }
+        .add-button:hover {
+            background-color: #d4f5d4;
+        }
+        .blue-add-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 30px;
+            margin: 10px 0;
+            color: blue;
+            font-size: 20px;
+            border: 1px dashed blue;
+            border-radius: 5px;
+            background-color: #e8f1ff;
+            cursor: pointer;
+        }
+        .blue-add-button:hover {
+            background-color: #d4e8ff;
+        }
+        .file-label {
+            font-size: 14px;
+            color: #444;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>编辑段落</h1>
+    <div id="editor">
+        {% for block in blocks %}
+            {% if block.type == 'title' %}
+                <div class="text-box" style="font-weight: bold;">{{ block.content }}</div>
+            {% elif block.type == 'text' %}
+                <div class="text-box">{{ block.content }}</div>
+                <div class="add-button" onclick="goToImageSearch({{ loop.index }})">+</div>
+                <script>
+                    function goToImageSearch(index) {
+                        // 跳转到图片搜索页面，携带加号框的索引参数
+                        window.location.href = `/image_search_engine?index=${index}`;
+                    }
+                </script>
+                <div class="blue-add-button" onclick="goToVideoSearch()">+</div>
+            {% elif block.type == 'image' %}
+                <div class="image-box">
+                    <input type="file" accept="image/*" id="file-input-{{ loop.index }}">
+                    <label for="file-input-{{ loop.index }}" class="file-label">
+                        {{ block.basename }}
+                    </label>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <script>
+        function goToImageSearch(index) {
+            // 跳转到图片搜索页面，携带加号框的索引
+            window.location.href = `/image_search_engine?index=${index}`;
+        }
+
+        function goToVideoSearch() {
+            // 视频添加功能（待实现）
+            alert("视频添加功能尚未实现！");
+        }
+    </script>
+</body>
+</html>

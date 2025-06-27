@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .result-item {
+            text-align: center;
+            max-width: 200px;
+        }
+        img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <div class="results-container">
+        {% for result in search_results %}
+            <div class="result-item">
+                <img src="{{ result.thumbnail }}" alt="Image">
+                <br>
+                <button onclick="selectImage('{{ result.link }}')">Select</button>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+                function selectImage(imageUrl) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const index = urlParams.get('index'); // 获取 URL 中的 index 参数
+
+                    if (!index) {
+                        alert('未找到加号框索引，请重试！');
+                        return;
+                    }
+
+                    // 将图片地址和加号框索引发送到后端
+                    fetch('/update_image', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ image_url: imageUrl, index: parseInt(index) }),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('图片已成功添加！');
+                            window.location.href = '/'; // 返回解析页面
+                        } else {
+                            return response.json().then(data => {
+                                alert('添加图片失败：' + (data.error || '未知错误'));
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('发生错误，请重试。');
+                    });
+                }
+    </script>
+</body>
+</html>

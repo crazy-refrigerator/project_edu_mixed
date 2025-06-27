@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Options</title>
+</head>
+<body>
+    <h1>Edit Image</h1>
+    <img src="{{ url_for('serve_upload', filename=filename) }}" alt="Uploaded Image" style="max-width: 100%;">
+    <form action="" method="post">
+        <h2>Text Editing</h2>
+        <label for="original_text">Original Text:</label>
+        <input type="text" name="original_text" id="original_text" placeholder="e.g., Example">
+        <br>
+        <label for="replacement_text">Replacement Text:</label>
+        <input type="text" name="replacement_text" id="replacement_text" placeholder="e.g., Demo">
+        <br>
+        <h2>Color Editing</h2>
+        <label for="target_color">Target Color:</label>
+        <input type="color" name="target_color" id="target_color">
+        <br>
+        <label for="replacement_color">Replacement Color:</label>
+        <input type="color" name="replacement_color" id="replacement_color">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replace Line Color</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="file"],
+        input[type="color"],
+        button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .color-preview {
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+            margin-left: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Replace Line Color</h1>
+    <form action="/edit" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/png, image/jpeg" required>
+        <br>
+        <label for="target_color">Select target color (line color to replace):</label>
+        <input type="color" id="target_color" name="target_color" value="#000000" onchange="updateColorPreview('target_preview', this.value)">
+        <span id="target_preview" class="color-preview" style="background-color: #000000;"></span>
+        <br>
+        <label for="replacement_color">Select replacement color:</label>
+        <input type="color" id="replacement_color" name="replacement_color" value="#FF0000" onchange="updateColorPreview('replacement_preview', this.value)">
+        <span id="replacement_preview" class="color-preview" style="background-color: #FF0000;"></span>
+        <br>
+        <button type="submit">Replace Color</button>
+    </form>
+    <script>
+        function updateColorPreview(previewId, color) {
+            document.getElementById(previewId).style.backgroundColor = color;
+        }
+    </script>
+</body>
+</html>
